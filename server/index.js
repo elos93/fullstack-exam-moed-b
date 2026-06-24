@@ -39,7 +39,7 @@ app.use(async (req, res, next) => {
 app.use(workoutRoutes)
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Workout Tracker server is active' })
+  res.json({ message: 'Workout Tracker API is running' })
 })
 
 if (require.main === module) {
@@ -47,6 +47,7 @@ if (require.main === module) {
     .then(() => {
       app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`)
+        console.log('MongoDB connected successfully')
       })
     })
     .catch((error) => {

@@ -1,8 +1,18 @@
 # Fullstack Workout Tracker App
 
-A full stack workout tracker project for managing workout exercises. This stage includes the backend API only.
+A full stack workout tracker application for creating, listing, searching and deleting workout records. This stage focuses on the standalone Express backend.
 
-## Technologies
+## Project Structure
+
+```txt
+fullstack-exam-moed-b/
+├── client/     Standalone React frontend
+├── server/     Standalone Express backend
+├── README.md
+└── .gitignore
+```
+
+## Backend Technologies
 
 - Node.js
 - Express
@@ -12,22 +22,30 @@ A full stack workout tracker project for managing workout exercises. This stage 
 - cors
 - nodemon
 
-## Backend Setup
+## Installation
 
 ```bash
 cd server
 npm install
+```
+
+## Running The Backend
+
+Development:
+
+```bash
+cd server
 npm run dev
 ```
 
-For production-style startup:
+Production-style startup:
 
 ```bash
 cd server
 npm start
 ```
 
-The server starts only after a successful MongoDB connection.
+The backend uses `process.env.PORT` or falls back to `5000`.
 
 ## Environment Variables
 
@@ -38,36 +56,11 @@ PORT=5000
 MONGODB_URI=
 AI_GATEWAY_API_KEY=
 AI_GATEWAY_MODEL=
-FRONTEND_URL=
 ```
 
-Do not commit `.env` files.
+Do not commit `.env` files or secret values.
 
-## Vercel Preparation
-
-Use the same GitHub repository for two separate Vercel projects:
-
-- Backend Project Root Directory: `server`
-- Frontend Project Root Directory: `client`
-
-Backend environment variables required on Vercel:
-
-```txt
-MONGODB_URI
-AI_GATEWAY_API_KEY
-AI_GATEWAY_MODEL
-FRONTEND_URL
-```
-
-Frontend environment variable required on Vercel later:
-
-```txt
-VITE_API_URL
-```
-
-Do not create one shared Vercel project for both folders.
-
-## Workout Model
+## Workout Structure
 
 ```js
 {
@@ -75,6 +68,35 @@ Do not create one shared Vercel project for both folders.
   muscleGroup: String, // required, trim, minlength 1
   description: String, // required, trim, maxlength 200
   timestamps: true
+}
+```
+
+Example request body:
+
+```json
+{
+  "name": "Leg Workout",
+  "muscleGroup": "Legs",
+  "description": "A beginner leg workout"
+}
+```
+
+Example success response:
+
+```json
+{
+  "_id": "660000000000000000000000",
+  "name": "Leg Workout",
+  "muscleGroup": "Legs",
+  "description": "A beginner leg workout"
+}
+```
+
+Example error response:
+
+```json
+{
+  "message": "name, muscleGroup, and description are required"
 }
 ```
 
@@ -87,6 +109,11 @@ GET /workouts/search?name=
 DELETE /workouts/:id
 ```
 
+## Future Links
+
+- Frontend: TBD
+- Backend: TBD
+
 ## AI Usage
 
-AI was used to set up the project, write code, run checks, and fix errors.
+AI tools were used for project setup, code assistance, debugging and code review. All generated code was reviewed and adapted to the project requirements.
