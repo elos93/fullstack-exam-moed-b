@@ -1,15 +1,15 @@
 # Fullstack Workout Tracker App
 
-A full-stack workout tracker for creating, listing, searching and deleting workout records. The project is split into a standalone React frontend and a standalone Express backend.
+A full-stack workout tracker for creating, listing, searching, deleting, and generating descriptions for workout records. The project is split into a standalone React frontend and a standalone Express backend.
 
 ## Project Structure
 
 ```txt
 fullstack-exam-moed-b/
-├── client/     React frontend
-├── server/     Express backend
-├── README.md
-└── .gitignore
+|-- client/     React frontend
+|-- server/     Express backend
+|-- README.md
+`-- .gitignore
 ```
 
 ## Technologies
@@ -23,6 +23,9 @@ fullstack-exam-moed-b/
 - Express
 - MongoDB
 - Mongoose
+- Vercel AI Gateway
+- AI SDK
+- Zod
 - dotenv
 - cors
 - nodemon
@@ -93,6 +96,7 @@ Do not commit `.env` files or secret values.
 ```txt
 GET /workouts
 POST /workouts
+POST /workouts/generate
 GET /workouts/search?name=
 DELETE /workouts/:id
 ```
@@ -108,7 +112,7 @@ DELETE /workouts/:id
 }
 ```
 
-Example request body:
+## Create Workout Request
 
 ```json
 {
@@ -118,7 +122,34 @@ Example request body:
 }
 ```
 
-Example error response:
+## AI Description Generation
+
+Endpoint:
+
+```txt
+POST /workouts/generate
+```
+
+Request body:
+
+```json
+{
+  "name": "Beginner Leg Workout",
+  "muscleGroup": "Legs"
+}
+```
+
+Response body:
+
+```json
+{
+  "description": "A short workout description"
+}
+```
+
+The generated description is inserted into the frontend description field, but it is not saved automatically. The user can edit the generated description and must click the regular add workout button to save the workout to MongoDB.
+
+## Example Error Response
 
 ```json
 {
@@ -133,4 +164,4 @@ Example error response:
 
 ## AI Usage
 
-AI tools were used for project setup, code assistance, debugging and code review. All generated code was reviewed and adapted to the project requirements.
+AI tools were used for project setup, code assistance, debugging, code review, and workout description generation. All generated code and generated workout content were reviewed and adapted to the project requirements.
