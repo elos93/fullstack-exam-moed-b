@@ -16,9 +16,10 @@ export async function createWorkout(workout) {
   return response.data
 }
 
-export async function searchWorkouts(name) {
+export async function searchWorkouts(name, signal) {
   const response = await api.get('/workouts/search', {
     params: { name },
+    signal,
   })
   return response.data
 }
