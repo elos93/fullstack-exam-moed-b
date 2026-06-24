@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createWorkout } from '../api/workoutsApi'
+import { createWorkout, generateWorkoutDescription } from '../api/workoutsApi'
 
 const initialForm = {
   name: '',
@@ -10,6 +10,7 @@ const initialForm = {
 function AddWorkoutPage() {
   const [formData, setFormData] = useState(initialForm)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isGenerating, setIsGenerating] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
   const [error, setError] = useState('')
 
@@ -76,6 +77,39 @@ function AddWorkoutPage() {
     }
   }
 
+  async function handleGenerateDescription() {
+    const trimmedName = formData.name.trim()
+    const trimmedMuscleGroup = formData.muscleGroup.trim()
+
+    if (!trimmedName) {
+      alert('Name is required before generating a description.')
+      return
+    }
+
+    if (!trimmedMuscleGroup) {
+      alert('Muscle group is required before generating a description.')
+      return
+    }
+
+    try {
+      setIsGenerating(true)
+      setError('')
+      setSuccessMessage('')
+      const data = await generateWorkoutDescription({
+        name: trimmedName,
+        muscleGroup: trimmedMuscleGroup,
+      })
+      setFormData((currentData) => ({
+        ...currentData,
+        description: data.description || '',
+      }))
+    } catch (generateError) {
+      alert('Could not generate description.')
+    } finally {
+      setIsGenerating(false)
+    }
+  }
+
   return (
     <section className="max-w-2xl space-y-6">
       <div>
@@ -120,6 +154,15 @@ function AddWorkoutPage() {
             value={formData.description}
           />
         </label>
+
+        <button
+          className="rounded-md border border-emerald-700 px-4 py-2 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-50 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:text-emerald-300"
+          disabled={isGenerating || isSubmitting}
+          onClick={handleGenerateDescription}
+          type="button"
+        >
+          {isGenerating ? 'Generating...' : 'Generate Description with AI'}
+        </button>
 
         {successMessage && (
           <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm font-medium text-emerald-800">
