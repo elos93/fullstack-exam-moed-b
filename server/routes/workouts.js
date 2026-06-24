@@ -1,9 +1,13 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const { z } = require('zod')
 const Workout = require('../models/Workout')
 
 const router = express.Router()
 const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+const aiDescriptionSchema = z.object({
+  description: z.string().trim().min(1).max(200),
+})
 
 router.get('/workouts', async (req, res) => {
   try {
@@ -11,6 +15,40 @@ router.get('/workouts', async (req, res) => {
     res.json(workouts)
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch workouts' })
+  }
+})
+
+router.post('/workouts/generate', async (req, res) => {
+  const name = (req.body.name || '').trim()
+  const muscleGroup = (req.body.muscleGroup || '').trim()
+  const model = process.env.AI_GATEWAY_MODEL
+
+  if (!name || !muscleGroup) {
+    return res.status(400).json({ message: 'name and muscleGroup are required' })
+  }
+
+  if (!process.env.AI_GATEWAY_API_KEY || !model) {
+    return res.status(500).json({ message: 'AI generation is not configured' })
+  }
+
+  try {
+    const { generateObject } = await import('ai')
+    const { object } = await generateObject({
+      model,
+      schema: aiDescriptionSchema,
+      prompt: [
+        'Return JSON only. Do not return Markdown.',
+        'Return exactly one field: description.',
+        'The description must be a short workout description up to 200 characters.',
+        `Workout name: ${name}`,
+        `Muscle group: ${muscleGroup}`,
+      ].join('\n'),
+    })
+
+    const description = object.description.trim()
+    res.json({ description: description.slice(0, 200) })
+  } catch (error) {
+    res.status(500).json({ message: 'AI generation failed' })
   }
 })
 
