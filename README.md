@@ -1,19 +1,24 @@
 # Fullstack Workout Tracker App
 
-A full stack workout tracker application for creating, listing, searching and deleting workout records. This stage focuses on the standalone Express backend.
+A full-stack workout tracker for creating, listing, searching and deleting workout records. The project is split into a standalone React frontend and a standalone Express backend.
 
 ## Project Structure
 
 ```txt
 fullstack-exam-moed-b/
-├── client/     Standalone React frontend
-├── server/     Standalone Express backend
+├── client/     React frontend
+├── server/     Express backend
 ├── README.md
 └── .gitignore
 ```
 
-## Backend Technologies
+## Technologies
 
+- React with Vite
+- JavaScript
+- React Router
+- Axios
+- Tailwind CSS
 - Node.js
 - Express
 - MongoDB
@@ -22,34 +27,43 @@ fullstack-exam-moed-b/
 - cors
 - nodemon
 
-## Installation
+## Local Setup
+
+Install backend dependencies:
 
 ```bash
 cd server
 npm install
 ```
 
-## Running The Backend
+Install frontend dependencies:
 
-Development:
+```bash
+cd client
+npm install
+```
+
+## Run The Backend
 
 ```bash
 cd server
 npm run dev
 ```
 
-Production-style startup:
+The backend uses `process.env.PORT` or falls back to `5000`.
+
+## Run The Frontend
 
 ```bash
-cd server
-npm start
+cd client
+npm run dev
 ```
 
-The backend uses `process.env.PORT` or falls back to `5000`.
+The frontend expects the backend URL from `VITE_API_URL` and falls back to `http://localhost:5000`.
 
 ## Environment Variables
 
-Create `server/.env` locally based on `server/.env.example`:
+Backend `server/.env`:
 
 ```env
 PORT=5000
@@ -58,7 +72,30 @@ AI_GATEWAY_API_KEY=
 AI_GATEWAY_MODEL=
 ```
 
+Frontend `client/.env`:
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
 Do not commit `.env` files or secret values.
+
+## Frontend Routes
+
+```txt
+/workouts-all
+/workout-add
+/workouts-search
+```
+
+## Backend Endpoints
+
+```txt
+GET /workouts
+POST /workouts
+GET /workouts/search?name=
+DELETE /workouts/:id
+```
 
 ## Workout Structure
 
@@ -81,17 +118,6 @@ Example request body:
 }
 ```
 
-Example success response:
-
-```json
-{
-  "_id": "660000000000000000000000",
-  "name": "Leg Workout",
-  "muscleGroup": "Legs",
-  "description": "A beginner leg workout"
-}
-```
-
 Example error response:
 
 ```json
@@ -100,19 +126,10 @@ Example error response:
 }
 ```
 
-## Backend Endpoints
+## Production Links
 
-```txt
-GET /workouts
-POST /workouts
-GET /workouts/search?name=
-DELETE /workouts/:id
-```
-
-## Future Links
-
-- Frontend: TBD
-- Backend: TBD
+- Frontend Production: TBD
+- Backend Production: TBD
 
 ## AI Usage
 
