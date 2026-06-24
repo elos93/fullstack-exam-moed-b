@@ -73,6 +73,7 @@ PORT=5000
 MONGODB_URI=
 AI_GATEWAY_API_KEY=
 AI_GATEWAY_MODEL=
+FRONTEND_URL=
 ```
 
 Frontend `client/.env`:
@@ -159,8 +160,8 @@ The generated description is inserted into the frontend description field, but i
 
 ## Production Links
 
-- Frontend Production: TBD
-- Backend Production: TBD
+- Frontend Production: https://fullstack-exam-moed-b-frontend.vercel.app
+- Backend Production: https://fullstack-exam-moed-b-backend.vercel.app
 
 ## AI Usage
 
