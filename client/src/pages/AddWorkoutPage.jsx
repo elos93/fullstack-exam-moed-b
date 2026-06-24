@@ -90,7 +90,6 @@ function AddWorkoutPage() {
           <span className="text-sm font-semibold text-slate-700">Name</span>
           <input
             className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-950 outline-none transition focus:border-emerald-700 focus:ring-2 focus:ring-emerald-100"
-            maxLength="20"
             name="name"
             onChange={handleChange}
             placeholder="Leg Workout"
@@ -115,7 +114,6 @@ function AddWorkoutPage() {
           <span className="text-sm font-semibold text-slate-700">Description</span>
           <textarea
             className="min-h-32 w-full resize-y rounded-md border border-slate-300 px-3 py-2 text-slate-950 outline-none transition focus:border-emerald-700 focus:ring-2 focus:ring-emerald-100"
-            maxLength="200"
             name="description"
             onChange={handleChange}
             placeholder="A beginner leg workout"
