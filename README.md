@@ -38,9 +38,34 @@ PORT=5000
 MONGODB_URI=
 AI_GATEWAY_API_KEY=
 AI_GATEWAY_MODEL=
+FRONTEND_URL=
 ```
 
 Do not commit `.env` files.
+
+## Vercel Preparation
+
+Use the same GitHub repository for two separate Vercel projects:
+
+- Backend Project Root Directory: `server`
+- Frontend Project Root Directory: `client`
+
+Backend environment variables required on Vercel:
+
+```txt
+MONGODB_URI
+AI_GATEWAY_API_KEY
+AI_GATEWAY_MODEL
+FRONTEND_URL
+```
+
+Frontend environment variable required on Vercel later:
+
+```txt
+VITE_API_URL
+```
+
+Do not create one shared Vercel project for both folders.
 
 ## Workout Model
 

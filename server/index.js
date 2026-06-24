@@ -7,28 +7,52 @@ const workoutRoutes = require('./routes/workouts')
 const app = express()
 const PORT = process.env.PORT || 5000
 const MONGODB_URI = process.env.MONGODB_URI
+const FRONTEND_URL = process.env.FRONTEND_URL
+let cachedConnection = null
 
-app.use(cors())
+const corsOptions = FRONTEND_URL ? { origin: FRONTEND_URL } : {}
+
+async function connectToDatabase() {
+  if (!MONGODB_URI) {
+    throw new Error('MONGODB_URI is not defined')
+  }
+
+  if (cachedConnection) {
+    return cachedConnection
+  }
+
+  cachedConnection = mongoose.connect(MONGODB_URI)
+  return cachedConnection
+}
+
+app.use(cors(corsOptions))
 app.use(express.json())
+app.use(async (req, res, next) => {
+  try {
+    await connectToDatabase()
+    next()
+  } catch (error) {
+    console.error('MongoDB connection failed:', error.message)
+    res.status(500).json({ message: 'Database connection failed' })
+  }
+})
 app.use(workoutRoutes)
 
 app.get('/', (req, res) => {
   res.json({ message: 'Workout Tracker server is active' })
 })
 
-if (!MONGODB_URI) {
-  console.error('MongoDB connection failed: MONGODB_URI is not defined')
-  process.exit(1)
+if (require.main === module) {
+  connectToDatabase()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`)
+      })
+    })
+    .catch((error) => {
+      console.error('MongoDB connection failed:', error.message)
+      process.exit(1)
+    })
 }
 
-mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`)
-    })
-  })
-  .catch((error) => {
-    console.error('MongoDB connection failed:', error.message)
-    process.exit(1)
-  })
+module.exports = app
