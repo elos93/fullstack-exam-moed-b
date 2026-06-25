@@ -4,9 +4,9 @@ import WorkoutListPage from './pages/WorkoutListPage'
 import WorkoutSearchPage from './pages/WorkoutSearchPage'
 
 const navLinks = [
-  { to: '/workouts-all', label: 'All Workouts' },
-  { to: '/workout-add', label: 'Add Workout' },
-  { to: '/workouts-search', label: 'Search' },
+  { to: '/all-workouts', label: 'All Workouts' },
+  { to: '/add-workout', label: 'Add Workout' },
+  { to: '/search-workouts', label: 'Search' },
 ]
 
 function App() {
@@ -43,11 +43,14 @@ function App() {
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <Routes>
-          <Route element={<Navigate replace to="/workouts-all" />} path="/" />
-          <Route element={<WorkoutListPage />} path="/workouts-all" />
-          <Route element={<AddWorkoutPage />} path="/workout-add" />
-          <Route element={<WorkoutSearchPage />} path="/workouts-search" />
-          <Route element={<Navigate replace to="/workouts-all" />} path="*" />
+          <Route element={<Navigate replace to="/all-workouts" />} path="/" />
+          <Route element={<WorkoutListPage />} path="/all-workouts" />
+          <Route element={<AddWorkoutPage />} path="/add-workout" />
+          <Route element={<WorkoutSearchPage />} path="/search-workouts" />
+          <Route element={<Navigate replace to="/all-workouts" />} path="/workouts-all" />
+          <Route element={<Navigate replace to="/add-workout" />} path="/workout-add" />
+          <Route element={<Navigate replace to="/search-workouts" />} path="/workouts-search" />
+          <Route element={<Navigate replace to="/all-workouts" />} path="*" />
         </Routes>
       </main>
     </div>

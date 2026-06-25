@@ -87,9 +87,9 @@ Do not commit `.env` files or secret values.
 ## Frontend Routes
 
 ```txt
-/workouts-all
-/workout-add
-/workouts-search
+/all-workouts
+/add-workout
+/search-workouts
 ```
 
 ## Backend Endpoints
